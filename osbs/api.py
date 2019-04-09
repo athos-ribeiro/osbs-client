@@ -613,6 +613,7 @@ class OSBS(object):
                               compose_ids=None,
                               reactor_config_override=None,
                               parent_images_digests=None,
+                              parent_images_metadata=None,
                               git_commit_depth=None,
                               operator_manifests_extract_platform=None,
                               **kwargs):
@@ -722,6 +723,7 @@ class OSBS(object):
             compose_ids=compose_ids,
             osbs_api=self,
             parent_images_digests=parent_images_digests,
+            parent_images_metadata=parent_images_metadata,
             tags_from_yaml=repo_info.additional_tags.from_container_yaml,
             additional_tags=repo_info.additional_tags.tags,
             git_commit_depth=repo_info.configuration.depth,

@@ -491,6 +491,9 @@ class PluginsConfiguration(object):
         if self.user_params.parent_images_digests.value:
             self.pt.set_plugin_arg(phase, plugin, 'parent_images_digests',
                                    self.user_params.parent_images_digests.value)
+        if self.user_params.parent_images_metadata.value:
+            self.pt.set_plugin_arg(phase, plugin, 'parent_images_metadata',
+                                   self.user_params.parent_images_metadata.value)
 
     def render(self):
         self.user_params.validate()

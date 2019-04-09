@@ -45,6 +45,7 @@ class BuildUserParams(BuildCommon):
         self.koji_upload_dir = BuildParam('koji_upload_dir', allow_none=True)
         self.name = BuildIDParam()
         self.parent_images_digests = BuildParam('parent_images_digests', allow_none=True)
+        self.parent_images_metadata = BuildParam('parent_images_metadata', allow_none=True)
         self.operator_manifests_extract_platform = BuildParam('operator_manifests_extract_platform',
                                                               allow_none=True)
         self.platforms = BuildParam('platforms', allow_none=True)
@@ -86,7 +87,7 @@ class BuildUserParams(BuildCommon):
                    flatpak=None, reactor_config_map=None, reactor_config_override=None,
                    yum_repourls=None, signing_intent=None, compose_ids=None,
                    isolated=None, scratch=None, parent_images_digests=None,
-                   tags_from_yaml=None, additional_tags=None,
+                   parent_images_metadata=None, tags_from_yaml=None, additional_tags=None,
                    git_commit_depth=None,
                    operator_manifests_extract_platform=None, **kwargs):
         self.git_uri.value = git_uri
@@ -127,6 +128,7 @@ class BuildUserParams(BuildCommon):
                 self.build_imagestream.value = source_value
 
         self.parent_images_digests.value = parent_images_digests
+        self.parent_images_metadata.value = parent_images_metadata
         self.operator_manifests_extract_platform.value = operator_manifests_extract_platform
         self.platforms.value = platforms
         self.platform.value = platform
