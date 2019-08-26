@@ -468,8 +468,8 @@ class Connection(object):
             raise ValueError("Can't find '%s' in url mapping definition" % key)
 
     @staticmethod
-    def response(status_code=200, content=b'', headers=None):
-        return HttpResponse(status_code, headers or {}, content=content)
+    def response(status_code=200, content=b'', headers=None, text=''):
+        return HttpResponse(status_code, headers or {}, content=content, text=text)
 
     def request(self, url, method, stream=None, *args, **kwargs):
         parsed_url = urlparse(url)

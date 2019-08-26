@@ -279,12 +279,14 @@ class TestHttpResponse(object):
     def test_simple_response(self):
         content_json = b'"this is content"'
         content_str = "this is content"
-        response = HttpResponse(status_code=http_client.OK, headers={}, content=content_json)
+        response = HttpResponse(status_code=http_client.OK, headers={}, content=content_json,
+                                text=content_str)
         assert content_str == response.json()
 
     def test_bad_coding_guess(self):
         bad_json = b'[\"cat\", \"dog\"][\"cat\", \"dog\"]'
-        response = HttpResponse(status_code=http_client.OK, headers={}, content=bad_json)
+        response = HttpResponse(status_code=http_client.OK, headers={}, content=bad_json,
+                                text=bad_json.decode('utf-8'))
         with pytest.raises(OsbsResponseException) as exc_info:
             response.json()
         assert 'HtttpResponse has corrupt json' in exc_info.value.message
