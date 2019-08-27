@@ -628,7 +628,7 @@ class Openshift(object):
 
             encoding = None
             for line in response.iter_lines():
-                logger.debug(line)
+                logger.debug('%r', line)
 
                 if not encoding:
                     encoding = guess_json_utf(line)
