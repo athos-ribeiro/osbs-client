@@ -53,11 +53,9 @@ class Response(object):
 
 
 def make_json_response(obj):
-    json_str = json.dumps(obj).encode('utf-8')
     return HttpResponse(200,
                         headers={"Content-Type": "application/json"},
-                        content=json_str,
-                        text=json_str)
+                        content=json.dumps(obj).encode('utf-8'))
 
 
 class TestCheckResponse(object):
@@ -276,7 +274,7 @@ class TestOpenshift(object):
             .should_receive("_get")
             .with_args(expected_url)
             .once()
-            .and_return(HttpResponse(404, {}, b'', '')))
+            .and_return(HttpResponse(404, {}, b'')))
         with pytest.raises(OsbsResponseException):
             openshift.get_build_config(build_config_name)
 
@@ -443,8 +441,7 @@ class TestOpenshift(object):
             get_response = make_json_response({"metadata": {}})
             put_response = HttpResponse(status_code,
                                         headers={},
-                                        content=b'',
-                                        text='')
+                                        content=b'')
             get_expectation = get_expectation.and_return(get_response)
             put_expectation = put_expectation.and_return(put_response)
 
@@ -604,8 +601,7 @@ class TestOpenshift(object):
         else:
             expectation.and_return(HttpResponse(status_code,
                                                 headers={},
-                                                content=b'',
-                                                text=''))
+                                                content=b''))
 
         if status_code == 404:
             expected_change = True
@@ -655,12 +651,10 @@ class TestOpenshift(object):
         for status_code in status_codes:
             get_response = HttpResponse(http_client.NOT_FOUND,
                                         headers={},
-                                        content=b'',
-                                        text='')
+                                        content=b'')
             put_response = HttpResponse(status_code,
                                         headers={},
-                                        content=b'',
-                                        text='')
+                                        content=b'')
             get_expectation = get_expectation.and_return(get_response)
             put_expectation = put_expectation.and_return(put_response)
 
@@ -868,14 +862,12 @@ class TestOpenshift(object):
             content_json = json.load(f)
 
         # Assume mocked data contains a good response
-        json_str = json.dumps(content_json).encode('utf-8')
-        good_resp = HttpResponse(200, {}, content=json_str, text=json_str)
+        good_resp = HttpResponse(200, {}, content=json.dumps(content_json).encode('utf-8'))
 
         # Create a bad response by marking the first image as failed
         for key in ('status', 'code', 'reason'):
             content_json['status']['images'][0]['status'][key] = image_status[key]
-        json_str = json.dumps(content_json).encode('utf-8')
-        bad_resp = HttpResponse(200, {}, content=json_str, text=json_str)
+        bad_resp = HttpResponse(200, {}, content=json.dumps(content_json).encode('utf-8'))
 
         # Make time go faster
         flexmock(time).should_receive('sleep')

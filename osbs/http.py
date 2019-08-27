@@ -62,8 +62,7 @@ class HttpSession(object):
 
             with stream as s:
                 content = s.req.content
-                text = s.req.text
-                return HttpResponse(s.status_code, s.headers, content, text)
+                return HttpResponse(s.status_code, s.headers, content)
         # Timeout will catch both ConnectTimout and ReadTimeout
         except (RetryError, Timeout) as ex:
             raise OsbsNetworkException(url, str(ex), '',
@@ -205,11 +204,10 @@ class HttpStream(object):
 
 
 class HttpResponse(object):
-    def __init__(self, status_code, headers, content, text):
+    def __init__(self, status_code, headers, content):
         self.status_code = status_code
         self.headers = headers
         self.content = content
-        self.text = text
 
     def json(self, check=True):
         encoding = guess_json_utf(self.content)
