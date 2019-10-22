@@ -44,6 +44,12 @@
     },
     {
       "name": "resolve_composes"
+    },
+    {
+      "name": "fetch_sources",
+      "args": {
+        "koji_build_id": 993245
+      }
     }
   ],
   "buildstep_plugins": [
